@@ -64,6 +64,9 @@ class MyModel:
     
     def build_model(self):
         input = layers.Input(shape=self.input_shape)
+        x = layers.Dense(512, activation='relu', kernel_regularizer=regularizers.l2(0.001))(input)
+        x = layers.BatchNormalization()(x)
+        x = layers.Dropout(0.5)(x)
         x = layers.Dense(256, activation='relu', kernel_regularizer=regularizers.l2(0.001))(input)
         x = layers.BatchNormalization()(x)
         x = layers.Dropout(0.5)(x)
@@ -71,6 +74,9 @@ class MyModel:
         x = layers.BatchNormalization()(x)
         x = layers.Dropout(0.5)(x)
         x = layers.Dense(64, activation='relu', kernel_regularizer=regularizers.l2(0.001))(x)
+        x = layers.BatchNormalization()(x)
+        x = layers.Dropout(0.5)(x)
+        x = layers.Dense(32, activation='relu', kernel_regularizer=regularizers.l2(0.001))(x)
         x = layers.BatchNormalization()(x)
         x = layers.Dropout(0.5)(x)
         x = layers.Dense(self.num_classes)(x)
@@ -128,12 +134,8 @@ valid_orig_files = glob.glob(os.path.join(base_valid_audio, '*/*.wav'), recursiv
 
 output_csv = '/data/GDSC_AudioPoli/AudioPoli-AI/output.csv'
 output_valid_csv = '/data/GDSC_AudioPoli/AudioPoli-AI/output_valid.csv'
-
-
-pd_data = pd.read_csv(output_csv)
-pd_data
-
 output_dropna_csv = '/data/GDSC_AudioPoli/AudioPoli-AI/output_dropna.csv'
+
 pd_data = pd.read_csv(output_dropna_csv)
 
 my_classes = ['강제추행(성범죄)', '강도범죄', '절도범죄', '폭력범죄',
@@ -154,13 +156,6 @@ filtered_pd['fold'] = -1
 kf = model_selection.StratifiedKFold(n_splits = 16)
 for fold, (trn_, val_) in enumerate(kf.split(X=filtered_pd, y=filtered_pd['category'])):
     filtered_pd.loc[val_, 'fold'] = fold
-
-# filtered_pd['Fold'].unique()
-    
-filtered_pd.head(10)
-filtered_pd['fold'].count()
-# filtered_pd['fold'].unique()
-# filtered_pd[filtered_pd.fold == 0]
 
 filenames = filtered_pd['filename']
 targets = filtered_pd['category']
@@ -193,7 +188,8 @@ input_shape = (1024,)
 num_classes = len(my_classes)
 my_model = MyModel(input_shape, num_classes)
 my_model.compile_model()
-history = my_model.fit_model(train_ds, val_ds, epochs=10)
+history = my_model.fit_model(train_ds, val_ds, epochs=5)
+my_model.save("seq_model.h5")
 
 input_segment = tf.keras.layers.Input(shape=(), dtype=tf.float32, name='audio')
 embedding_extraction_layer = hub.KerasLayer(yamnet_model_handle,
