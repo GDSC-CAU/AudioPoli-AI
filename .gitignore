@@ -208,7 +208,8 @@ audiopoli_nafp/**/__pycache__
 audiopoli_nafp/**/**/__pycache__
 audiopoli_nafp/**/**/**/__pycache__
 audiopoli_nafp/logs/
-audiopoli_nafp/**/dev/
+audiopoli_nafp/**/dev/g
+audiopoli_nafp/*.md
 
 
 
