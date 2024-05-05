@@ -202,5 +202,15 @@ legacy/eval_2
 *.pkl
 *.xlsx
 
+# audiopoli_nafp
+audiopoli_nafp/./_*.py
+audiopoli_nafp/**/__pycache__
+audiopoli_nafp/**/**/__pycache__
+audiopoli_nafp/**/**/**/__pycache__
+audiopoli_nafp/logs/
+audiopoli_nafp/**/dev/g
+audiopoli_nafp/*.md
+
+
 
 # End of https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks
