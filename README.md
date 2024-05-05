@@ -23,7 +23,7 @@
 
 
 
-**[Video: Audio Poli - GDSC Solution Challenge 2024](https://youtu.be/Q8JWalCFGrE?feature=shared)**
+**[Video: Audio Poli - GDSC Solution Challenge 2024](https://youtu.be/4MbzBjkOC8Q?si=rpfeDiqtMU_sJ1OB)**
 
 ## 🤔 The Problem We Faced
 
